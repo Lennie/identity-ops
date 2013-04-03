@@ -1,4 +1,3 @@
-
 server {
     # HTTP <%= @site_name %>
     listen   8000 default;
@@ -6,15 +5,11 @@ server {
     # Set STS Header
     add_header Strict-Transport-Security "max-age=10886400; includeSubdomains";
 
-    # redirect
-    # http://wiki.nginx.org/IfIsEvil
-    if ($request_method ~ GET|HEAD ) {
-        rewrite        ^ https://<%= @site_name %>$request_uri? permanent;
-    }
-
     if ($request_method !~ GET|HEAD ) {
         return 400 "{\"error\": \"Please use HTTPS rather than HTTP\"}";
     }
+
+    rewrite        ^ https://<%= @site_name %>$request_uri? permanent;
 }
 
 
